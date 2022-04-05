@@ -5,9 +5,9 @@ export default class ImageSlider {
 
   #slideWidth = 0;
 
-  #intervalId;
-
   #autoPlay = true;
+
+  #intervalId;
 
   sliderWrapEl;
 
@@ -24,7 +24,7 @@ export default class ImageSlider {
   constructor() {
     this.assignElement();
     this.initSliderNumber();
-    this.initSlideWidth();
+    this.initSliderWidth();
     this.initSliderListWidth();
     this.addEvent();
     this.createIndicator();
@@ -41,15 +41,11 @@ export default class ImageSlider {
     this.controlWrapEl = this.sliderWrapEl.querySelector('#control-wrap');
   }
 
-  initAutoplay() {
-    this.#intervalId = setInterval(this.moveToRight.bind(this), 3000);
-  }
-
   initSliderNumber() {
     this.#slideNumber = this.sliderListEl.querySelectorAll('li').length;
   }
 
-  initSlideWidth() {
+  initSliderWidth() {
     this.#slideWidth = this.sliderListEl.clientWidth;
   }
 
@@ -65,31 +61,6 @@ export default class ImageSlider {
       this.onClickIndicator.bind(this),
     );
     this.controlWrapEl.addEventListener('click', this.togglePlay.bind(this));
-  }
-
-  togglePlay(event) {
-    if (event.target.dataset.status === 'play') {
-      this.#autoPlay = true;
-      this.controlWrapEl.classList.add('play');
-      this.controlWrapEl.classList.remove('pause');
-      this.initAutoplay();
-    } else if (event.target.dataset.status === 'pause') {
-      this.#autoPlay = false;
-      this.controlWrapEl.classList.remove('play');
-      this.controlWrapEl.classList.add('pause');
-      clearInterval(this.#intervalId);
-    }
-  }
-
-  onClickIndicator(event) {
-    const indexPosition = parseInt(event.target.dataset.index, 10);
-    if (Number.isInteger(indexPosition)) {
-      this.#currentPostion = indexPosition;
-      this.sliderListEl.style.left = `-${
-        this.#slideWidth * this.#currentPostion
-      }px`;
-      this.setIndicator();
-    }
   }
 
   moveToRight() {
@@ -137,5 +108,34 @@ export default class ImageSlider {
     this.indicatorWrapEl
       .querySelector(`ul li:nth-child(${this.#currentPostion + 1})`)
       .classList.add('active');
+  }
+
+  onClickIndicator(event) {
+    const indexPosition = parseInt(event.target.dataset.index, 10);
+    if (Number.isInteger(indexPosition)) {
+      this.#currentPostion = indexPosition;
+      this.sliderListEl.style.left = `-${
+        this.#slideWidth * this.#currentPostion
+      }px`;
+      this.setIndicator();
+    }
+  }
+
+  initAutoplay() {
+    this.#intervalId = setInterval(this.moveToRight.bind(this), 3000);
+  }
+
+  togglePlay(event) {
+    if (event.target.dataset.status === 'play') {
+      this.#autoPlay = true;
+      this.controlWrapEl.classList.add('play');
+      this.controlWrapEl.classList.remove('pause');
+      this.initAutoplay();
+    } else if (event.target.dataset.status === 'pause') {
+      this.#autoPlay = false;
+      this.controlWrapEl.classList.add('pause');
+      this.controlWrapEl.classList.remove('play');
+      clearInterval(this.#intervalId);
+    }
   }
 }
