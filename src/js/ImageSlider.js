@@ -1,25 +1,25 @@
 export default class ImageSlider {
-  #currentPostion = 0
+  #currentPostion = 0;
 
-  #slideNumber = 0
+  #slideNumber = 0;
 
-  #slideWidth = 0
+  #slideWidth = 0;
 
-  #intervalId
+  #intervalId;
 
   #autoPlay = true;
 
-  sliderWrapEl
+  sliderWrapEl;
 
-  sliderListEl
-  
-  nextBtnEl
+  sliderListEl;
 
-  previousBtnEl
+  nextBtnEl;
 
-  indicatorWrapEl
+  previousBtnEl;
 
-  controlWrapEl
+  indicatorWrapEl;
+
+  controlWrapEl;
 
   constructor() {
     this.assignElement();
@@ -37,8 +37,8 @@ export default class ImageSlider {
     this.sliderListEl = this.sliderWrapEl.querySelector('#slider');
     this.nextBtnEl = this.sliderWrapEl.querySelector('#next');
     this.previousBtnEl = this.sliderWrapEl.querySelector('#previous');
-    this.indicatorWrapEl = this.sliderWrapEl.querySelector('#indicator-wrap')
-    this.controlWrapEl = this.sliderWrapEl.querySelector('#control-wrap')
+    this.indicatorWrapEl = this.sliderWrapEl.querySelector('#indicator-wrap');
+    this.controlWrapEl = this.sliderWrapEl.querySelector('#control-wrap');
   }
 
   initAutoplay() {
@@ -46,7 +46,7 @@ export default class ImageSlider {
   }
 
   initSliderNumber() {
-    this.#slideNumber = this.sliderListEl.querySelectorAll('li').length
+    this.#slideNumber = this.sliderListEl.querySelectorAll('li').length;
   }
 
   initSlideWidth() {
@@ -77,7 +77,7 @@ export default class ImageSlider {
       this.#autoPlay = false;
       this.controlWrapEl.classList.remove('play');
       this.controlWrapEl.classList.add('pause');
-      clearInterval(this.#intervalId)
+      clearInterval(this.#intervalId);
     }
   }
 
@@ -86,9 +86,9 @@ export default class ImageSlider {
     if (Number.isInteger(indexPosition)) {
       this.#currentPostion = indexPosition;
       this.sliderListEl.style.left = `-${
-        this.#slideWidth * this.#currentPostion  
-      }px`
-      this.setIndicator()
+        this.#slideWidth * this.#currentPostion
+      }px`;
+      this.setIndicator();
     }
   }
 
@@ -110,7 +110,7 @@ export default class ImageSlider {
   moveToLeft() {
     this.#currentPostion -= 1;
     if (this.#currentPostion === -1) {
-      this.#currentPostion = this.#slideNumber -1;
+      this.#currentPostion = this.#slideNumber - 1;
     }
     this.sliderListEl.style.left = `-${
       this.#slideWidth * this.#currentPostion
@@ -133,9 +133,9 @@ export default class ImageSlider {
   }
 
   setIndicator() {
-    this.indicatorWrapEl.querySelector('li.active')?.classList.remove('active')
+    this.indicatorWrapEl.querySelector('li.active')?.classList.remove('active');
     this.indicatorWrapEl
-    .querySelector(`ul li:nth-child(${this.#currentPostion + 1})`)
-    .classList.add('active')
+      .querySelector(`ul li:nth-child(${this.#currentPostion + 1})`)
+      .classList.add('active');
   }
 }

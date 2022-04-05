@@ -1,4 +1,4 @@
-import '../css/style.css'
-import Slider from './ImageSlider'
+import '../css/style.css';
+import Slider from './ImageSlider';
 
-const slider = new Slider()
+const slider = new Slider();
